@@ -1,4 +1,4 @@
-namespace Luna.Application.Common.Interfaces;
+namespace Luna.Application.Common.Interfaces.Services;
 
 public interface IPasswordService
 {

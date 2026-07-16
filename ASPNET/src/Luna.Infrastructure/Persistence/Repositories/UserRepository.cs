@@ -1,4 +1,4 @@
-using Luna.Application.Common.Interfaces;
+using Luna.Application.Common.Interfaces.Repositories;
 using Luna.Application.Common.Models;
 using Luna.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

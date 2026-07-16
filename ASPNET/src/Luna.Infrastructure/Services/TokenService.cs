@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Luna.Application.Common.Interfaces;
+using Luna.Application.Common.Interfaces.Services;
 using Luna.Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;

@@ -1,6 +1,7 @@
 using Luna.Api.Helpers;
 using Luna.Application.Features.Auth;
-using Luna.Application.Common.Interfaces;
+using Luna.Application.Common.Interfaces.Repositories;
+using Luna.Application.Common.Interfaces.Services;
 using Luna.Infrastructure.Persistence.Repositories;
 using Luna.Infrastructure.Services;
 

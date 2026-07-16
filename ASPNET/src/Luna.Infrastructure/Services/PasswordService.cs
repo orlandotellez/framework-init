@@ -1,4 +1,4 @@
-using Luna.Application.Common.Interfaces;
+using Luna.Application.Common.Interfaces.Services;
 
 namespace Luna.Infrastructure.Services;
 

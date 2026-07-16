@@ -1,6 +1,6 @@
 using Luna.Application.Common.Models;
 
-namespace Luna.Application.Common.Interfaces;
+namespace Luna.Application.Common.Interfaces.Services;
 
 public interface IAuthService
 {
