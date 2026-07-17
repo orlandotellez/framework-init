@@ -19,7 +19,7 @@ builder.Services.AddRateLimiterConfiguration();
 builder.Services.AddCorsConfiguration(builder.Configuration);
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
-
+builder.Services.AddAuthenticationConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
