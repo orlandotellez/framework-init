@@ -1,0 +1,50 @@
+export type Role = "admin" | "cajero";
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  email_verified: boolean;
+  phone?: string;
+  image?: string;
+  role: Role;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at?: Date;
+}
+
+export interface Account {
+  id: string;
+  account_id: string;
+  provider_id: string;
+  user_id?: string;
+  access_token?: string;
+  refresh_token?: string;
+  id_token?: string;
+  access_token_expires_at?: Date;
+  refresh_token_expires_at?: Date;
+  scope?: string;
+  password?: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Session {
+  id: string;
+  expires_at: Date;
+  token: string;
+  ip_address?: string;
+  user_agent?: string;
+  user_id: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Verification {
+  id: string;
+  identifier: string;
+  value: string;
+  expires_at: Date;
+  created_at: Date;
+  updated_at: Date;
+}
