@@ -1,0 +1,42 @@
+### 1. List users (admin only)
+GET http://localhost:3000/users
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 2. Get user by id
+GET http://localhost:3000/users/REPLACE_WITH_USER_ID
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 3. Create user
+# Get a valid role_id from the roles list first
+POST http://localhost:3000/users
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "name": "Cashier",
+  "email": "cashier@example.com",
+  "password": "cashier123",
+  "role_id": "REPLACE_WITH_ROLE_ID"
+}
+
+### 4. Update user
+PUT http://localhost:3000/users/REPLACE_WITH_USER_ID
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "name": "Cashier Updated"
+}
+
+### 5. Toggle user active status
+PATCH http://localhost:3000/users/REPLACE_WITH_USER_ID/active
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "is_active": false
+}
+
+### 6. Delete user
+DELETE http://localhost:3000/users/REPLACE_WITH_USER_ID
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN

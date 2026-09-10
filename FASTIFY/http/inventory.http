@@ -1,0 +1,48 @@
+### 1. List inventory movements
+GET http://localhost:3000/inventory/movements
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 2. Filter movements by product and type
+GET http://localhost:3000/inventory/movements?product_id=REPLACE_WITH_PRODUCT_ID&type=entrada
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 3. Register an entrada (stock in)
+POST http://localhost:3000/inventory/movements
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "product_id": "REPLACE_WITH_PRODUCT_ID",
+  "type": "entrada",
+  "quantity": 20,
+  "unit_cost": 1.1,
+  "note": "New supplier delivery"
+}
+
+### 4. Register a salida (stock out)
+POST http://localhost:3000/inventory/movements
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "product_id": "REPLACE_WITH_PRODUCT_ID",
+  "type": "salida",
+  "quantity": 5,
+  "note": "Sale"
+}
+
+### 5. Register an ajuste (stock correction)
+POST http://localhost:3000/inventory/movements
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "product_id": "REPLACE_WITH_PRODUCT_ID",
+  "type": "ajuste",
+  "quantity": 25,
+  "note": "Physical count"
+}
+
+### 6. List products below their low stock threshold
+GET http://localhost:3000/inventory/products/low-stock
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN

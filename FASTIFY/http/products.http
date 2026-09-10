@@ -1,0 +1,38 @@
+### 1. List products (any authenticated user)
+GET http://localhost:3000/products
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 2. Search products
+GET http://localhost:3000/products?search=coca
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 3. Get product by id
+GET http://localhost:3000/products/REPLACE_WITH_PRODUCT_ID
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+### 4. Create product
+POST http://localhost:3000/products
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "name": "Sprite 500ml",
+  "barcode": "7790000000042",
+  "price": 1.5,
+  "cost": 1.1,
+  "stock": 40,
+  "low_stock_threshold": 10
+}
+
+### 5. Update product
+PUT http://localhost:3000/products/REPLACE_WITH_PRODUCT_ID
+Content-Type: application/json
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
+
+{
+  "price": 1.6
+}
+
+### 6. Delete product
+DELETE http://localhost:3000/products/REPLACE_WITH_PRODUCT_ID
+Cookie: access_token=REPLACE_WITH_ACCESS_TOKEN
