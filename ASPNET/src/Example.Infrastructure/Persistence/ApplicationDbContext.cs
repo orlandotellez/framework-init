@@ -1,4 +1,5 @@
 using Example.Domain.Entities;
+using Example.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Example.Infrastructure.Persistence;
@@ -11,4 +12,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Session> Sessions => Set<Session>();
     public DbSet<Verification> Verifications => Set<Verification>();
+    public DbSet<Product> Products => Set<Product>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+    }
 }
