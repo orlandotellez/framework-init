@@ -8,7 +8,7 @@ public class VerificationConfiguration : IEntityTypeConfiguration<Verification>
 {
     public void Configure(EntityTypeBuilder<Verification> builder)
     {
-        builder.ToTable("Verification");
+        builder.ToTable("Verifications");
 
         builder.HasKey(v => v.Id);
         builder.Property(v => v.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");

@@ -11,7 +11,7 @@ public class SessionConfiguration : IEntityTypeConfiguration<Session>
         builder.ToTable("Sessions");
 
         builder.HasKey(s => s.Id);
-        builder.Property(s => s.Id).HasDefaultValueSql("gen_random_uuid()");
+        builder.Property(s => s.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
 
         builder.Property(s => s.ExpiresAt).IsRequired().HasColumnName("expires_at");
 

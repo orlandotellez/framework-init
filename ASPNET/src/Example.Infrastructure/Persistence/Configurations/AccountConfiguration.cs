@@ -8,7 +8,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
-        builder.ToTable("Account");
+        builder.ToTable("Accounts");
 
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");

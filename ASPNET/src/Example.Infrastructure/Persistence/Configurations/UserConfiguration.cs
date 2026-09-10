@@ -11,7 +11,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
         builder.HasKey(u => u.Id);
-        builder.Property(u => u.Id).HasDefaultValueSql("gen_random_uuid()");
+        builder.Property(u => u.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
 
         builder.Property(u => u.Name).IsRequired().HasColumnName("name").HasMaxLength(255);
         builder.Property(u => u.Email).IsRequired().HasColumnName("email").HasMaxLength(255);
@@ -34,6 +34,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.IsActive).HasColumnName("is_active").IsRequired().HasDefaultValue(true);
 
         builder.Property(u => u.LastSeenAt).HasColumnName("last_seen_at");
+
+        builder.Property(u => u.FailedLoginAttempts).HasColumnName("failed_login_attempts");
+        builder.Property(u => u.LockoutEnd).HasColumnName("lockout_end");
 
         builder.HasIndex(u => u.Role);
         builder.HasIndex(u => u.CreatedAt).HasDatabaseName("idx_users_created_at");
