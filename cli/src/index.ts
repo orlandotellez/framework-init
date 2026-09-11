@@ -49,12 +49,9 @@ program
           : undefined;
         let projectName = projectNameArg;
 
-        // Interactive mode if no template given
-        if (!template) {
-          template = await selectTemplate();
-        }
-
-        if (!template) {
+        // Template arg provided but not found: error directly
+        // (do NOT fall through to interactive mode)
+        if (templateArg && !template) {
           console.error(
             chalk.red(
               `\n\u2716 Template "${templateArg}" not found.\n`
@@ -65,6 +62,11 @@ program
             console.log(`  - ${t.folder.toLowerCase()}`)
           );
           process.exit(1);
+        }
+
+        // Interactive mode if no template given
+        if (!template) {
+          template = await selectTemplate();
         }
 
         // Ask for name if not provided
