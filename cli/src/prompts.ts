@@ -6,7 +6,7 @@ export async function selectTemplate(): Promise<Template> {
     {
       type: "list",
       name: "template",
-      message: "What project do you want to create?",
+      message: "¿Qué proyecto querés crear?",
       choices: TEMPLATES.map((t) => ({
         name: `${t.name} — ${t.description}`,
         value: t,
@@ -21,11 +21,11 @@ export async function askProjectName(): Promise<string> {
     {
       type: "input",
       name: "name",
-      message: "Project name:",
+      message: "Nombre del proyecto:",
       validate: (input) => {
-        if (!input.trim()) return "Name cannot be empty";
+        if (!input.trim()) return "El nombre no puede estar vacío";
         if (!/^[a-zA-Z0-9_-]+$/.test(input)) {
-          return "Only letters, numbers, hyphens and underscores";
+          return "Solo letras, números, guiones y guiones bajos";
         }
         return true;
       },

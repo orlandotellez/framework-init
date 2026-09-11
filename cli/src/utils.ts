@@ -18,10 +18,10 @@ export function printSuccess(
   const devCmd = postInit?.dev || "npm run dev";
 
   console.log(`
-\u001b[32m\u2714\u001b[0m Template downloaded
-\u001b[32m\u2714\u001b[0m Project created in ./${projectName}
+\u001b[32m\u2714\u001b[0m Template descargado
+\u001b[32m\u2714\u001b[0m Proyecto creado en ./${projectName}
 
-\u001b[1mNext steps:\u001b[0m
+\u001b[1mPróximos pasos:\u001b[0m
 
   \u001b[36mcd ${projectName}\u001b[0m
   \u001b[36m${installCmd}\u001b[0m
