@@ -1,0 +1,11 @@
+{
+  "name": "react-native",
+  "description": "App móvil con React Native, Expo y TypeScript",
+  "version": "1.0.0",
+  "runtime": "node",
+  "postInit": {
+    "install": "npm install",
+    "dev": "npx expo start"
+  },
+  "tags": ["react-native", "expo", "typescript", "mobile"]
+}

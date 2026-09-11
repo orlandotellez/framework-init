@@ -1,0 +1,12 @@
+{
+  "name": "express",
+  "description": "API REST con Express, Prisma, TypeScript y Bun",
+  "version": "1.0.0",
+  "runtime": "bun",
+  "postInit": {
+    "install": "bun install",
+    "dev": "bun dev",
+    "build": "bun run build"
+  },
+  "tags": ["express", "prisma", "typescript", "bun", "api"]
+}

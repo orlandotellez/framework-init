@@ -1,0 +1,12 @@
+{
+  "name": "aspnet",
+  "description": "API REST con ASP.NET Core, Clean Architecture y C#",
+  "version": "1.0.0",
+  "runtime": "dotnet",
+  "postInit": {
+    "restore": "dotnet restore",
+    "build": "dotnet build",
+    "run": "dotnet run --project src/Example.Api"
+  },
+  "tags": ["csharp", "dotnet", "api", "clean-architecture"]
+}
