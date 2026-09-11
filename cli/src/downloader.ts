@@ -4,7 +4,7 @@ import { join } from "path";
 import { tmpdir } from "os";
 import { randomBytes } from "crypto";
 
-const GITHUB_REPO = "orlandotellez/framework-init";
+const GITHUB_REPO = "orlandotellez/fwinit";
 const GITHUB_BRANCH = "main";
 
 export interface DownloadResult {
@@ -28,13 +28,13 @@ export async function downloadAndExtract(
   const zip = new AdmZip(buffer);
 
   const tempId = randomBytes(8).toString("hex");
-  const tempDir = join(tmpdir(), `framework-init-${tempId}`);
+  const tempDir = join(tmpdir(), `fwinit-${tempId}`);
   await mkdir(tempDir, { recursive: true });
 
   zip.extractAllTo(tempDir, true);
 
-  // GitHub ZIP extracts as: framework-init-main/templates/FOLDER/
-  const repoRoot = join(tempDir, `framework-init-${GITHUB_BRANCH}`);
+  // GitHub ZIP extracts as: fwinit-main/templates/FOLDER/
+  const repoRoot = join(tempDir, `fwinit-${GITHUB_BRANCH}`);
   const templatePath = join(repoRoot, "templates", templateFolder);
 
   // Verify template exists

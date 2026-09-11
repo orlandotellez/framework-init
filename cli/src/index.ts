@@ -19,7 +19,7 @@ import {
 const program = new Command();
 
 program
-  .name("framework-init")
+  .name("fwinit")
   .description("CLI to create projects from templates")
   .version("1.0.0");
 

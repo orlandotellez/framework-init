@@ -1,6 +1,6 @@
-# framework-init
+# fwinit
 
-Repositorio de templates para scaffoldear proyectos con [framework-init CLI](https://github.com/orlandotellez/framework-init).
+Repositorio de templates para scaffoldear proyectos con [fwinit CLI](https://github.com/orlandotellez/fwinit).
 
 ## Templates Disponibles
 
@@ -16,15 +16,15 @@ Repositorio de templates para scaffoldear proyectos con [framework-init CLI](htt
 
 ```bash
 # Instalar la CLI
-npm install -g framework-init
+npm install -g fwinit
 
 # Crear proyecto desde template
-framework-init fastify mi-api
-framework-init aspnet mi-app
-framework-init react-native mi-mobile
+fwinit fastify mi-api
+fwinit aspnet mi-app
+fwinit react-native mi-mobile
 
 # Ver templates disponibles
-framework-init list
+fwinit list
 ```
 
 ## Uso Directo (sin CLI)
@@ -32,16 +32,16 @@ framework-init list
 Si preferís clonar directamente:
 
 ```bash
-git clone https://github.com/orlandotellez/framework-init.git
-cd framework-init/templates/FASTIFY
+git clone https://github.com/orlandotellez/fwinit.git
+cd fwinit/templates/FASTIFY
 # Copiar los archivos a tu proyecto
 ```
 
 ## Estructura
 
 ```
-framework-init/
-├── cli/                 # Fuente de la framework-init CLI
+fwinit/
+├── cli/                 # Fuente de la fwinit CLI
 │   ├── src/
 │   └── package.json
 ├── templates/

@@ -1,10 +1,10 @@
 {
-  "name": "framework-init",
+  "name": "fwinit",
   "version": "1.0.0",
   "description": "CLI para crear proyectos desde templates",
   "type": "module",
   "bin": {
-    "framework-init": "./dist/index.js"
+    "fwinit": "./dist/index.js"
   },
   "files": [
     "dist"

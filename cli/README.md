@@ -1,13 +1,13 @@
-# framework-init
+# fwinit
 
 CLI para crear proyectos desde templates. Instalás una vez y scaffoldás proyectos con un comando.
 
 ## Instalación
 
 ```bash
-npm install -g framework-init
+npm install -g fwinit
 # o
-bun add -g framework-init
+bun add -g fwinit
 ```
 
 ## Uso
@@ -15,15 +15,15 @@ bun add -g framework-init
 ### Modo directo
 
 ```bash
-framework-init fastify mi-api
-framework-init aspnet mi-app
-framework-init react-native mi-mobile
+fwinit fastify mi-api
+fwinit aspnet mi-app
+fwinit react-native mi-mobile
 ```
 
 ### Modo interactivo
 
 ```bash
-framework-init
+fwinit
 ```
 
 Te pregunta qué template usar y el nombre del proyecto.
@@ -31,13 +31,13 @@ Te pregunta qué template usar y el nombre del proyecto.
 ### Ver templates disponibles
 
 ```bash
-framework-init list
+fwinit list
 ```
 
 ### Help
 
 ```bash
-framework-init --help
+fwinit --help
 ```
 
 ## Templates disponibles
@@ -79,7 +79,7 @@ node dist/index.js fastify mi-api
 
 ```bash
 bun link
-# ahora `framework-init` está disponible en todo el sistema
+# ahora `fwinit` está disponible en todo el sistema
 ```
 
 ## Licencia
