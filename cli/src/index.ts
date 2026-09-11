@@ -8,6 +8,7 @@ import {
   downloadAndExtract,
   copyTemplate,
   cleanup,
+  substituteTemplate,
 } from "./downloader.js";
 import { selectTemplate, askProjectName } from "./prompts.js";
 import {
@@ -20,15 +21,15 @@ const program = new Command();
 
 program
   .name("fwinit")
-  .description("CLI to create projects from templates")
+  .description("CLI para crear proyectos desde templates")
   .version("1.0.0");
 
 program
   .command("list")
-  .description("Show available templates")
+  .description("Mostrar templates disponibles")
   .action(() => {
     console.log(
-      chalk.bold("\nAvailable templates:\n")
+      chalk.bold("\nTemplates disponibles:\n")
     );
     TEMPLATES.forEach((t) => {
       console.log(
@@ -39,8 +40,8 @@ program
   });
 
 program
-  .argument("[template]", "Template to use")
-  .argument("[project-name]", "Project name")
+  .argument("[template]", "Template a usar")
+  .argument("[project-name]", "Nombre del proyecto")
   .action(
     async (templateArg?: string, projectNameArg?: string) => {
       try {
@@ -49,60 +50,65 @@ program
           : undefined;
         let projectName = projectNameArg;
 
-        // Template arg provided but not found: error directly
-        // (do NOT fall through to interactive mode)
+        // El argumento del template no se encontró: error directo
+        // (no caer en el modo interactivo)
         if (templateArg && !template) {
           console.error(
             chalk.red(
-              `\n\u2716 Template "${templateArg}" not found.\n`
+              `\n\u2716 Template "${templateArg}" no encontrado.\n`
             )
           );
-          console.log("Available templates:");
+          console.log("Templates disponibles:");
           TEMPLATES.forEach((t) =>
             console.log(`  - ${t.folder.toLowerCase()}`)
           );
           process.exit(1);
         }
 
-        // Interactive mode if no template given
+        // Modo interactivo si no se pasó ningún template
         if (!template) {
           template = await selectTemplate();
         }
 
-        // Ask for name if not provided
+        // Preguntar el nombre si no se proporcionó
         if (!projectName) {
           projectName = await askProjectName();
         }
 
-        // Check if directory already exists
+        // Verificar si el directorio ya existe
         if (projectExists(projectName)) {
           console.error(
             chalk.red(
-              `\n\u2716 Directory "${projectName}" already exists.`
+              `\n\u2716 El directorio "${projectName}" ya existe.`
             )
           );
           process.exit(1);
         }
 
-        // Download and create
+        // Descargar y crear el proyecto
         const spinner = ora(
-          `Downloading ${template.name} template...`
+          `Descargando template ${template.name}...`
         ).start();
 
         const { tempDir, templatePath } =
           await downloadAndExtract(template.folder);
 
-        spinner.text = "Creating project...";
+        spinner.text = "Creando proyecto...";
 
         await copyTemplate(
           templatePath,
           getProjectPath(projectName)
         );
+        await substituteTemplate(
+          getProjectPath(projectName),
+          projectName,
+          template.folder
+        );
         await cleanup(tempDir);
 
-        spinner.succeed("Template downloaded");
+        spinner.succeed("Template descargado");
 
-        // Read postInit from template.json if exists
+        // Leer postInit de template.json si existe
         let postInit:
           | { install?: string; dev?: string }
           | undefined;
@@ -117,7 +123,7 @@ program
           );
           postInit = tj.postInit;
         } catch {
-          // template.json not found or invalid, use defaults
+          // template.json no encontrado o inválido, usar valores por defecto
         }
 
         printSuccess(projectName, template.name, postInit);

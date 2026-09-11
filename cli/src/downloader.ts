@@ -1,6 +1,6 @@
 import AdmZip from "adm-zip";
-import { mkdir, rm, cp, readdir } from "fs/promises";
-import { join } from "path";
+import { mkdir, rm, cp, readdir, readFile, writeFile, rename } from "fs/promises";
+import { join, extname } from "path";
 import { tmpdir } from "os";
 import { randomBytes } from "crypto";
 
@@ -33,11 +33,11 @@ export async function downloadAndExtract(
 
   zip.extractAllTo(tempDir, true);
 
-  // GitHub ZIP extracts as: fwinit-main/templates/FOLDER/
+  // El ZIP de GitHub se extrae como: fwinit-main/templates/FOLDER/
   const repoRoot = join(tempDir, `fwinit-${GITHUB_BRANCH}`);
   const templatePath = join(repoRoot, "templates", templateFolder);
 
-  // Verify template exists
+  // Verifica que el template exista
   try {
     await readdir(templatePath);
   } catch {
@@ -71,11 +71,118 @@ async function cleanTemplate(dir: string): Promise<void> {
     try {
       await rm(path, { force: true });
     } catch {
-      // File doesn't exist, skip
+      // El archivo no existe, ignorar
     }
   }
 }
 
 export async function cleanup(tempDir: string): Promise<void> {
   await rm(tempDir, { recursive: true, force: true });
+}
+
+export async function substituteTemplate(
+  dir: string,
+  projectName: string,
+  templateFolder: string
+): Promise<void> {
+  if (templateFolder === "ASPNET") {
+    await substituteAspNet(dir, projectName);
+  } else {
+    await substituteNodejs(dir, projectName);
+  }
+}
+
+async function substituteNodejs(
+  dir: string,
+  projectName: string
+): Promise<void> {
+  const packageJsonPath = join(dir, "package.json");
+  try {
+    const content = await readFile(packageJsonPath, "utf-8");
+    const pkg = JSON.parse(content);
+    pkg.name = projectName;
+    await writeFile(packageJsonPath, JSON.stringify(pkg, null, 2) + "\n");
+  } catch {
+    // package.json no encontrado o inválido, saltar
+  }
+}
+
+async function substituteAspNet(
+  dir: string,
+  projectName: string
+): Promise<void> {
+  const pascalName = toPascalCase(projectName);
+  const textExtensions = new Set([".cs", ".csproj", ".slnx", ".json", ".http"]);
+
+  // 1. Obtener todos los archivos recursivamente
+  const allFiles = await getAllFiles(dir);
+
+  // 2. Reemplazar contenido en archivos de texto
+  for (const filePath of allFiles) {
+    const ext = extname(filePath).toLowerCase();
+    if (textExtensions.has(ext)) {
+      try {
+        const content = await readFile(filePath, "utf-8");
+        const replaced = content.replace(/Example/g, pascalName);
+        if (replaced !== content) {
+          await writeFile(filePath, replaced);
+        }
+      } catch {
+        // Saltar archivos que no se pueden leer
+      }
+    }
+  }
+
+  // 3. Renombrar archivos y carpetas (bottom-up para evitar conflictos de rutas)
+  await renameAll(dir, pascalName);
+}
+
+async function getAllFiles(dir: string): Promise<string[]> {
+  const results: string[] = [];
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...(await getAllFiles(fullPath)));
+    } else {
+      results.push(fullPath);
+    }
+  }
+
+  return results;
+}
+
+async function renameAll(dir: string, pascalName: string): Promise<void> {
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  // Procesar hijos primero (bottom-up)
+  for (const entry of entries) {
+    const oldPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await renameAll(oldPath, pascalName);
+    }
+  }
+
+  // Luego renombrar los elementos de este directorio
+  const entriesAfter = await readdir(dir, { withFileTypes: true });
+  for (const entry of entriesAfter) {
+    if (entry.name.includes("Example")) {
+      const oldPath = join(dir, entry.name);
+      const newName = entry.name.replace(/Example/g, pascalName);
+      const newPath = join(dir, newName);
+      try {
+        await rename(oldPath, newPath);
+      } catch {
+        // Saltar si el renombrado falla
+      }
+    }
+  }
+}
+
+function toPascalCase(str: string): string {
+  return str
+    .split(/[-_\s]+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join("");
 }
