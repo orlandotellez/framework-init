@@ -33,9 +33,9 @@ export async function downloadAndExtract(
 
   zip.extractAllTo(tempDir, true);
 
-  // GitHub ZIP extracts as: framework-init-main/FOLDER/
+  // GitHub ZIP extracts as: framework-init-main/templates/FOLDER/
   const repoRoot = join(tempDir, `framework-init-${GITHUB_BRANCH}`);
-  const templatePath = join(repoRoot, templateFolder);
+  const templatePath = join(repoRoot, "templates", templateFolder);
 
   // Verify template exists
   try {
