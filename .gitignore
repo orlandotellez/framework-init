@@ -1,44 +1,37 @@
-# Dependencies
-node_modules/
-
-# Build outputs
-dist/
-build/
-
-# Lock files (cada proyecto instalará las suyas)
-*.lock
-bun.lock
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
-
-# Environment files (solo .env.example se mantiene)
-.env
-.env.local
-.env.*.local
+# OS
+.DS_Store
+Thumbs.db
+*~
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# OS
-.DS_Store
-Thumbs.db
+# Dependencies
+node_modules/
 
-# .NET build artifacts
-**/bin/
-**/obj/
+# Build outputs
+dist/
+build/
+.cache/
+
+# Lock files
+*.lock
+bun.lock
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.*.local
 
 # Logs
 *.log
 *.err
 
-# Test coverage
+# Coverage
 coverage/
-TestResults/
-
-# Tool artifacts
-.atl/

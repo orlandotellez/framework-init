@@ -1,0 +1,37 @@
+{
+  "name": "framework-init",
+  "version": "1.0.0",
+  "description": "CLI para crear proyectos desde templates",
+  "type": "module",
+  "bin": {
+    "framework-init": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "inquirer": "^12.4.2",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/node": "^22.13.10",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  },
+  "keywords": [
+    "cli",
+    "templates",
+    "scaffolding",
+    "framework",
+    "boilerplate"
+  ],
+  "author": "Orlando Téllez",
+  "license": "MIT"
+}
