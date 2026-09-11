@@ -33,7 +33,7 @@ Si preferís clonar directamente:
 
 ```bash
 git clone https://github.com/orlandotellez/framework-init.git
-cd framework-init/FASTIFY
+cd framework-init/templates/FASTIFY
 # Copiar los archivos a tu proyecto
 ```
 
@@ -41,12 +41,16 @@ cd framework-init/FASTIFY
 
 ```
 framework-init/
-├── ASPNET/              # ASP.NET Core + Clean Architecture
-├── EXPRESS/             # Express + Prisma + TypeScript
-├── FASTIFY/             # Fastify + Prisma + TypeScript
-├── NODEJS-VANILLA/      # Node.js puro + Prisma + TypeScript
-├── REACT-NATIVE/        # React Native + Expo
-└── propuesta.md         # Documentación de la CLI
+├── cli/                 # Fuente de la framework-init CLI
+│   ├── src/
+│   └── package.json
+├── templates/
+│   ├── ASPNET/          # ASP.NET Core + Clean Architecture
+│   ├── EXPRESS/         # Express + Prisma + TypeScript
+│   ├── FASTIFY/         # Fastify + Prisma + TypeScript
+│   ├── NODEJS-VANILLA/  # Node.js puro + Prisma + TypeScript
+│   └── REACT-NATIVE/    # React Native + Expo
+└── README.md
 ```
 
 ## Cada template incluye
