@@ -96,6 +96,7 @@ async function substituteNodejs(
   dir: string,
   projectName: string
 ): Promise<void> {
+  // package.json: reemplazar el nombre del paquete
   const packageJsonPath = join(dir, "package.json");
   try {
     const content = await readFile(packageJsonPath, "utf-8");
@@ -105,6 +106,28 @@ async function substituteNodejs(
   } catch {
     // package.json no encontrado o inválido, saltar
   }
+
+  // app.json (Expo/React Native): reemplazar name, slug y scheme
+  const appJsonPath = join(dir, "app.json");
+  try {
+    const content = await readFile(appJsonPath, "utf-8");
+    const app = JSON.parse(content);
+    if (app.expo) {
+      app.expo.name = projectName;
+      app.expo.slug = projectName;
+      if (app.expo.scheme) {
+        // Expo requiere scheme alfanumérico (sin guiones)
+        app.expo.scheme = toScheme(projectName);
+      }
+      await writeFile(appJsonPath, JSON.stringify(app, null, 2) + "\n");
+    }
+  } catch {
+    // app.json no encontrado o inválido, saltar
+  }
+}
+
+function toScheme(str: string): string {
+  return str.replace(/[-_\s]+/g, "").toLowerCase();
 }
 
 async function substituteAspNet(
