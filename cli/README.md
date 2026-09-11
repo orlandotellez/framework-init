@@ -5,8 +5,13 @@ CLI para crear proyectos desde templates. Instalás una vez y scaffoldás proyec
 ## Instalación
 
 ```bash
+# pnpm (recomendado)
+pnpm add -g fwinit
+
+# npm
 npm install -g fwinit
-# o
+
+# bun
 bun add -g fwinit
 ```
 
@@ -61,11 +66,26 @@ fwinit --help
 ## Desarrollo
 
 ```bash
+# pnpm (recomendado)
+pnpm install
+pnpm run build        # build a dist/
+pnpm run dev          # watch mode
+pnpm run start        # ejecutar desde dist/
+pnpm run typecheck    # type check
+
+# npm
+npm install
+npm run build
+npm run dev
+npm run start
+npm run typecheck
+
+# bun
 bun install
-bun run build        # build a dist/
-bun run dev          # watch mode
-bun run start        # ejecutar desde dist/
-bun run typecheck    # type check
+bun run build
+bun run dev
+bun run start
+bun run typecheck
 ```
 
 ### Probar localmente
@@ -78,9 +98,38 @@ node dist/index.js fastify mi-api
 ### Link global para desarrollo
 
 ```bash
+# pnpm (recomendado)
+pnpm link --global
+
+# npm
+npm link
+
+# bun
 bun link
-# ahora `fwinit` está disponible en todo el sistema
 ```
+
+Ahora `fwinit` está disponible en todo el sistema.
+
+## Solución a problemas comunes
+
+### pnpm: "Unable to find the global bin directory"
+
+pnpm no tiene configurado el directorio global. Corré esto una vez:
+
+```bash
+pnpm setup
+source ~/.bashrc  # o reiniciá la terminal
+```
+
+### bun: "add the global bin folder to $PATH"
+
+bun se instaló pero falta agregar su directorio al PATH. Agregalo a tu `.bashrc` o `.zshrc`:
+
+```bash
+export PATH="$HOME/.bun/bin:$PATH"
+```
+
+Después reiniciá la terminal o corré `source ~/.bashrc`.
 
 ## Licencia
 
