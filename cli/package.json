@@ -13,7 +13,8 @@
     "build": "tsup src/index.ts --format esm --dts",
     "dev": "tsup src/index.ts --format esm --watch",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "chmod +x dist/index.js"
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
