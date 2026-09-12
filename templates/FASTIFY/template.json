@@ -5,7 +5,7 @@
   "runtime": "bun",
   "postInit": {
     "install": "bun install",
-    "dev": "bun dev",
+    "dev": "bun run dev",
     "build": "bun run build"
   },
   "tags": ["fastify", "prisma", "typescript", "bun", "api"]

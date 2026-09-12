@@ -10,14 +10,18 @@ import {
   cleanup,
   substituteTemplate,
 } from "./downloader.js";
-import { selectTemplate, askProjectName } from "./prompts.js";
+import { selectTemplate, askProjectName, selectPackageManager } from "./prompts.js";
 import {
   getProjectPath,
   projectExists,
   printSuccess,
+  adaptToNodeRuntime,
+  type PackageManager,
 } from "./utils.js";
 
 const program = new Command();
+
+const PACKAGE_MANAGERS = ["npm", "pnpm", "bun"] as const;
 
 program
   .name("fwinit")
@@ -42,13 +46,27 @@ program
 program
   .argument("[template]", "Template a usar")
   .argument("[project-name]", "Nombre del proyecto")
+  .option("-p, --pm <package-manager>", "Package manager a usar: npm, pnpm o bun")
   .action(
     async (templateArg?: string, projectNameArg?: string) => {
       try {
+        const { pm: pmArg } = program.opts<{ pm?: string }>();
+
+        // Validar el flag --pm si se proporcionó
+        if (pmArg && !PACKAGE_MANAGERS.includes(pmArg as PackageManager)) {
+          console.error(
+            chalk.red(
+              `\n\u2716 Package manager "${pmArg}" inválido. Usá: npm, pnpm o bun.\n`
+            )
+          );
+          process.exit(1);
+        }
+
         let template = templateArg
           ? findTemplate(templateArg)
           : undefined;
         let projectName = projectNameArg;
+        let pm: PackageManager | undefined = pmArg as PackageManager | undefined;
 
         // El argumento del template no se encontró: error directo
         // (no caer en el modo interactivo)
@@ -73,6 +91,12 @@ program
         // Preguntar el nombre si no se proporcionó
         if (!projectName) {
           projectName = await askProjectName();
+        }
+
+        // Preguntar el package manager en todos los templates JS/TS
+        // (ASP.NET usa dotnet, no aplica)
+        if (!pm && template.runtime !== "dotnet") {
+          pm = await selectPackageManager();
         }
 
         // Verificar si el directorio ya existe
@@ -104,6 +128,13 @@ program
           projectName,
           template.folder
         );
+
+        // Template nativo de bun + npm/pnpm → portar a runtime node
+        // (scripts con tsx, tests con vitest, sin bun-types)
+        if (template.runtime === "bun" && pm && pm !== "bun") {
+          await adaptToNodeRuntime(getProjectPath(projectName));
+        }
+
         await cleanup(tempDir);
 
         spinner.succeed("Template descargado");
@@ -126,7 +157,8 @@ program
           // template.json no encontrado o inválido, usar valores por defecto
         }
 
-        printSuccess(projectName, template.name, postInit);
+        // ASP.NET no pregunta: usa "npm" que no afecta los comandos dotnet
+        printSuccess(projectName, template.name, pm ?? "npm", postInit);
       } catch (error) {
         console.error(
           chalk.red(

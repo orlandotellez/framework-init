@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import { TEMPLATES, type Template } from "./templates.js";
+import type { PackageManager } from "./utils.js";
 
 export async function selectTemplate(): Promise<Template> {
   const { template } = await inquirer.prompt([
@@ -14,6 +15,23 @@ export async function selectTemplate(): Promise<Template> {
     },
   ]);
   return template;
+}
+
+export async function selectPackageManager(): Promise<PackageManager> {
+  const { pm } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "pm",
+      message: "¿Qué package manager querés usar?",
+      choices: [
+        { name: "pnpm (recomendado)", value: "pnpm" },
+        { name: "npm", value: "npm" },
+        { name: "bun", value: "bun" },
+      ],
+      default: "pnpm",
+    },
+  ]);
+  return pm;
 }
 
 export async function askProjectName(): Promise<string> {
